@@ -138,7 +138,9 @@
       document.getElementById("msg-body").textContent = t.body;
 
       document.querySelectorAll("#lang-switcher button").forEach((btn) => {
-        btn.classList.toggle("active", btn.dataset.locale === locale);
+        const isActive = btn.dataset.locale === locale;
+        btn.classList.toggle("active", isActive);
+        btn.setAttribute("aria-pressed", isActive ? "true" : "false");
       });
     }
 
@@ -147,6 +149,8 @@
     for (const [locale, t] of Object.entries(translations)) {
       const btn = document.createElement("button");
       btn.dataset.locale = locale;
+      btn.lang = locale;
+      btn.setAttribute("aria-pressed", "false");
       btn.textContent = t.lang;
       btn.addEventListener("click", () => render(locale));
       switcher.appendChild(btn);
